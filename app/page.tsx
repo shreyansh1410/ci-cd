@@ -16,17 +16,20 @@ export default function Home() {
         }
         .confetti-piece {
           position: absolute;
-          width: 10px; height: 20px;
           border-radius: 3px;
-          opacity: 0.7;
-          animation: fall 2.5s linear infinite;
+          opacity: 0.8;
+          animation: fall 2.5s linear infinite, sway 2s ease-in-out infinite alternate;
         }
         @keyframes fall {
-          0% { transform: translateY(-40px) rotate(0deg); }
-          100% { transform: translateY(100vh) rotate(360deg); }
+          0% { transform: translateY(-40px) rotate(var(--rotate, 0deg)); }
+          100% { transform: translateY(100vh) rotate(calc(var(--rotate, 0deg) + 360deg)); }
+        }
+        @keyframes sway {
+          0% { margin-left: 0; }
+          100% { margin-left: var(--sway, 0px); }
         }
       `}</style>
-      <Confetti count={30} />
+      <Confetti count={36} />
     </div>
   );
 }
@@ -46,6 +49,11 @@ function Confetti({ count }: { count: number }) {
         const left = Math.random() * 100;
         const delay = Math.random() * 2;
         const color = colors[i % colors.length];
+        const width = 8 + Math.random() * 8; // 8-16px
+        const height = 14 + Math.random() * 14; // 14-28px
+        const rotate = Math.floor(Math.random() * 360);
+        const duration = 2 + Math.random() * 1.5; // 2-3.5s
+        const sway = (Math.random() - 0.5) * 40; // -20 to 20px
         return (
           <div
             key={i}
@@ -53,7 +61,13 @@ function Confetti({ count }: { count: number }) {
             style={{
               left: `${left}vw`,
               background: color,
+              width: `${width}px`,
+              height: `${height}px`,
               animationDelay: `${delay}s`,
+              animationDuration: `${duration}s, 1.5s`,
+              // Custom properties for keyframes
+              ["--rotate" as any]: `${rotate}deg`,
+              ["--sway" as any]: `${sway}px`,
             }}
           />
         );
