@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Confetti } from "./page";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,7 +28,20 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            pointerEvents: "none",
+            zIndex: 1,
+          }}
+        >
+          <Confetti count={36} />
+        </div>
+        <div style={{ position: "relative", zIndex: 2 }}>{children}</div>
       </body>
     </html>
   );

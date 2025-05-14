@@ -34,7 +34,7 @@ export default function Home() {
   );
 }
 
-function Confetti({ count }: { count: number }) {
+export function Confetti({ count }: { count: number }) {
   const colors = [
     "#FFC700",
     "#FF0000",
