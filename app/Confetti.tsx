@@ -20,23 +20,18 @@ export function Confetti({ count }: { count: number }) {
         const rotate = Math.floor(Math.random() * 360);
         const duration = 2 + Math.random() * 1.5; // 2-3.5s
         const sway = (Math.random() - 0.5) * 40; // -20 to 20px
-        return (
-          <div
-            key={i}
-            className="confetti-piece"
-            style={{
-              left: `${left}vw`,
-              background: color,
-              width: `${width}px`,
-              height: `${height}px`,
-              animationDelay: `${delay}s`,
-              animationDuration: `${duration}s, 1.5s`,
-              // Custom properties for keyframes
-              ["--rotate" as any]: `${rotate}deg`,
-              ["--sway" as any]: `${sway}px`,
-            }}
-          />
-        );
+        const style: React.CSSProperties & Record<string, string> = {
+          left: `${left}vw`,
+          background: color,
+          width: `${width}px`,
+          height: `${height}px`,
+          animationDelay: `${delay}s`,
+          animationDuration: `${duration}s, 1.5s`,
+          // Custom properties for keyframes
+          "--rotate": `${rotate}deg`,
+          "--sway": `${sway}px`,
+        };
+        return <div key={i} className="confetti-piece" style={style} />;
       })}
     </>
   );
